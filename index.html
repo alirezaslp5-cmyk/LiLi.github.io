@@ -19,18 +19,14 @@
             box-sizing: border-box;
         }
 
-        html {
-            font-size: 16px;
-        }
-
         body {
-            min-height: 100vh;
-            min-height: 100dvh;
+            height: 100vh;
+            height: 100dvh;
             background: #0a0a0a;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow-x: hidden;
-            position: relative;
-            cursor: default;
+            overflow: hidden; /* مهم: جلوگیری از اسکرول */
+            position: fixed; /* مهم: ثابت نگه داشتن کل صفحه */
+            width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -122,39 +118,44 @@
             100% { transform: rotate(360deg) scale(1.5); }
         }
 
-        /* Main Container - کاملاً داینامیک */
+        /* Main Container */
         .main-wrapper {
             position: relative;
             z-index: 1;
             width: 100%;
-            min-height: 100vh;
-            min-height: 100dvh;
+            height: 100vh;
+            height: 100dvh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: clamp(10px, 2vw, 20px);
+            padding: 10px;
         }
 
         .container {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
-            border-radius: clamp(20px, 4vw, 40px);
-            padding: clamp(20px, 4vw, 40px) clamp(15px, 3vw, 30px);
+            border-radius: 20px;
+            padding: 15px;
             text-align: center;
             box-shadow: 
                 0 30px 60px rgba(255, 105, 180, 0.2),
                 0 0 100px rgba(138, 43, 226, 0.1),
                 inset 0 0 60px rgba(255, 255, 255, 0.05);
             border: 2px solid rgba(255, 255, 255, 0.15);
-            width: min(700px, 95vw);
-            max-width: 700px;
+            width: min(650px, 95vw);
+            max-width: 650px;
+            /* مهم: ارتفاع ثابت بر اساس viewport */
+            height: calc(100vh - 20px);
+            height: calc(100dvh - 20px);
+            max-height: 800px;
             animation: containerFloat 6s ease-in-out infinite;
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            gap: clamp(15px, 2.5vw, 25px);
+            justify-content: space-between; /* توزیع یکنواخت فضا */
+            gap: 8px;
         }
 
         .container::before {
@@ -181,7 +182,7 @@
             position: absolute;
             inset: 4px;
             background: rgba(10, 10, 10, 0.8);
-            border-radius: calc(clamp(20px, 4vw, 40px) - 4px);
+            border-radius: 16px;
             z-index: -1;
             pointer-events: none;
         }
@@ -193,26 +194,27 @@
 
         @keyframes containerFloat {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-5px); }
         }
 
-        /* Header Section */
-        .header {
+        /* بخش‌های داخلی با ارتفاع ثابت */
+        .header-section {
             position: relative;
             z-index: 2;
+            flex-shrink: 0; /* ارتفاع ثابت */
         }
 
         .love-icon {
-            font-size: clamp(2rem, 5vw, 3rem);
+            font-size: 1.8rem;
             animation: iconBounce 1s ease-in-out infinite;
             display: inline-block;
         }
 
         @keyframes iconBounce {
             0%, 100% { transform: translateY(0) scale(1); }
-            25% { transform: translateY(-15px) scale(1.1); }
+            25% { transform: translateY(-10px) scale(1.1); }
             50% { transform: translateY(0) scale(1); }
-            75% { transform: translateY(-10px) scale(1.05); }
+            75% { transform: translateY(-5px) scale(1.05); }
         }
 
         .title {
@@ -220,14 +222,11 @@
             background: linear-gradient(135deg, #ff6b9d, #c44dff, #ff6b9d);
             -webkit-background-clip: text;
             background-clip: text;
-            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-size: 1.3rem;
             font-weight: bold;
-            margin: 20px 0;
+            margin: 8px 0;
             animation: titleShine 3s ease-in-out infinite;
             background-size: 200% 200%;
-            word-break: break-word;
-            overflow-wrap: break-word;
-            hyphens: auto;
         }
 
         @keyframes titleShine {
@@ -245,62 +244,55 @@
             50% { filter: brightness(1.5) drop-shadow(0 0 10px gold); }
         }
 
-        /* Romantic Counter */
+        /* Love Counter - جمع و جور */
         .love-counter {
             display: flex;
             justify-content: center;
-            gap: clamp(8px, 1.5vw, 20px);
-            margin: 20px 0;
-            flex-wrap: wrap;
+            gap: 8px;
+            margin: 5px 0;
+            flex-wrap: nowrap;
             position: relative;
             z-index: 2;
+            flex-shrink: 0;
         }
 
         .counter-item {
             background: rgba(255, 255, 255, 0.1);
-            border-radius: clamp(12px, 2vw, 20px);
-            padding: clamp(10px, 1.5vw, 15px) clamp(12px, 2vw, 20px);
+            border-radius: 12px;
+            padding: 6px 10px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            flex: 1 1 clamp(70px, 20vw, 150px);
-            min-width: 70px;
-            max-width: 150px;
-            word-break: break-word;
-            overflow-wrap: break-word;
+            flex: 1;
+            min-width: 60px;
+            max-width: 120px;
         }
 
         .counter-number {
-            font-size: clamp(1.3rem, 3vw, 2rem);
+            font-size: 1.1rem;
             font-weight: bold;
             color: #ff6b9d;
             text-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
-            word-break: break-word;
-            overflow-wrap: break-word;
-            line-height: 1.2;
         }
 
         .counter-label {
             color: rgba(255, 255, 255, 0.7);
-            font-size: clamp(0.65rem, 1.2vw, 0.8rem);
-            margin-top: 5px;
-            word-break: break-word;
-            overflow-wrap: break-word;
-            hyphens: auto;
+            font-size: 0.6rem;
+            margin-top: 2px;
         }
 
-        /* Love Letter Animation */
+        /* Love Letter */
         .love-letter {
             position: relative;
             z-index: 2;
-            margin: 20px 0;
             cursor: pointer;
-            display: inline-block;
+            flex-shrink: 0;
         }
 
         .envelope {
-            font-size: clamp(2rem, 5vw, 3rem);
+            font-size: 2rem;
             animation: envelopeFloat 2s ease-in-out infinite;
             cursor: pointer;
             transition: transform 0.3s;
+            display: inline-block;
         }
 
         .envelope:hover {
@@ -309,21 +301,20 @@
 
         @keyframes envelopeFloat {
             0%, 100% { transform: translateY(0) rotate(-3deg); }
-            50% { transform: translateY(-8px) rotate(3deg); }
+            50% { transform: translateY(-5px) rotate(3deg); }
         }
 
         /* Language Select */
         .select-wrapper {
             position: relative;
             z-index: 2;
-            margin: clamp(15px, 2vw, 25px) 0;
-            width: 100%;
+            flex-shrink: 0;
         }
 
         .language-select {
             width: 100%;
-            padding: clamp(14px, 2vw, 18px) clamp(18px, 2.5vw, 25px);
-            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            padding: 10px 15px;
+            font-size: 0.85rem;
             border-radius: 50px;
             border: 2px solid rgba(255, 255, 255, 0.2);
             background: rgba(255, 255, 255, 0.08);
@@ -335,16 +326,12 @@
             -webkit-appearance: none;
             text-align: center;
             backdrop-filter: blur(10px);
-            letter-spacing: 1px;
-            max-width: 100%;
-            word-break: break-word;
         }
 
         .language-select:hover {
             background: rgba(255, 255, 255, 0.15);
             border-color: rgba(255, 105, 180, 0.6);
             box-shadow: 0 0 30px rgba(255, 105, 180, 0.3);
-            transform: translateY(-3px);
         }
 
         .language-select:focus {
@@ -356,50 +343,51 @@
             background: #1a1a2e;
             color: white;
             padding: 10px;
-            font-size: clamp(0.8rem, 1.2vw, 1rem);
         }
 
-        /* Result Display - کاملاً بهینه‌سازی شده */
+        /* Result Box - با ارتفاع ثابت */
         .result-box {
             position: relative;
             z-index: 2;
             background: rgba(255, 255, 255, 0.05);
-            border-radius: clamp(15px, 2.5vw, 25px);
-            padding: clamp(20px, 3vw, 30px) clamp(15px, 2vw, 20px);
-            margin-top: clamp(10px, 1.5vw, 20px);
+            border-radius: 15px;
+            padding: 10px;
             border: 1px solid rgba(255, 255, 255, 0.15);
-            min-height: clamp(100px, 15vw, 120px);
+            height: 100px;
+            min-height: 100px;
+            max-height: 100px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: all 0.5s ease;
+            transition: all 0.3s ease; /* فقط transition نگه دار */
+            overflow: hidden;
+            flex-shrink: 0;
+            opacity: 1; /* opacity پیش‌فرض */
+        }
+
+        .result-inner {
             width: 100%;
-            /* حذف overflow: hidden برای جلوگیری از برش */
-            overflow: visible;
-            /* کلمات بلند بشکنند */
-            word-break: break-word;
-            overflow-wrap: break-word;
-            hyphens: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
         }
 
         .love-text {
             color: white;
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-size: 1.3rem;
             font-weight: bold;
             text-shadow: 
                 0 0 20px rgba(255, 105, 180, 0.8),
                 0 0 40px rgba(255, 105, 180, 0.4),
                 0 0 60px rgba(138, 43, 226, 0.3);
             animation: loveGlow 2s ease-in-out infinite;
-            word-break: break-word;
-            overflow-wrap: break-word;
-            hyphens: auto;
+            white-space: nowrap; /* جلوگیری از شکستن خط */
+            overflow: hidden;
+            text-overflow: ellipsis;
             max-width: 100%;
-            line-height: 1.4;
-            display: block;
-            /* اطمینان از عدم بیرون زدن */
-            contain: layout style paint;
         }
 
         @keyframes loveGlow {
@@ -409,19 +397,14 @@
             }
             50% { 
                 text-shadow: 0 0 40px rgba(255, 105, 180, 1), 0 0 80px rgba(255, 105, 180, 0.6), 0 0 100px rgba(138, 43, 226, 0.4);
-                transform: scale(1.03);
+                transform: scale(1.02);
             }
         }
 
         .sender-text {
             color: rgba(255, 255, 255, 0.9);
-            font-size: clamp(0.85rem, 1.5vw, 1.1rem);
-            margin-top: 15px;
+            font-size: 0.75rem;
             font-style: italic;
-            word-break: break-word;
-            overflow-wrap: break-word;
-            hyphens: auto;
-            max-width: 100%;
         }
 
         .sender-text .heart {
@@ -438,6 +421,21 @@
             60% { transform: scale(1); }
         }
 
+        .result-date {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.65rem;
+        }
+
+        .result-quote {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.7rem;
+            font-style: italic;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+
         /* Music Player */
         .music-btn {
             position: relative;
@@ -445,17 +443,13 @@
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: white;
-            padding: clamp(10px, 1.5vw, 12px) clamp(20px, 3vw, 25px);
+            padding: 8px 20px;
             border-radius: 50px;
             cursor: pointer;
-            font-size: clamp(0.85rem, 1.3vw, 1rem);
-            margin: 15px auto;
+            font-size: 0.8rem;
             transition: all 0.3s;
             backdrop-filter: blur(5px);
-            display: inline-block;
-            width: fit-content;
-            max-width: 100%;
-            word-break: break-word;
+            flex-shrink: 0;
         }
 
         .music-btn:hover {
@@ -474,6 +468,39 @@
             50% { box-shadow: 0 0 50px rgba(255, 105, 180, 0.8); }
         }
 
+        /* Secret message */
+        .secret-message {
+            position: absolute;
+            z-index: 10;
+            background: rgba(10, 10, 15, 0.95);
+            border-radius: 15px;
+            padding: 15px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            width: 90%;
+            max-width: 500px;
+            backdrop-filter: blur(20px);
+        }
+
+        .secret-message.show {
+            display: block;
+            animation: fadeSlideIn 0.5s ease;
+        }
+
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -40%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
         /* Floating Hearts */
         .hearts-container {
             position: fixed;
@@ -488,7 +515,7 @@
         .float-heart {
             position: absolute;
             animation: floatUp 4s ease-in forwards;
-            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-size: 1.5rem;
             pointer-events: none;
         }
 
@@ -499,10 +526,10 @@
             }
             50% {
                 opacity: 1;
-                transform: translateY(-200px) rotate(180deg) scale(1.5);
+                transform: translateY(-150px) rotate(180deg) scale(1.5);
             }
             100% {
-                transform: translateY(-400px) rotate(360deg) scale(0);
+                transform: translateY(-300px) rotate(360deg) scale(0);
                 opacity: 0;
             }
         }
@@ -536,44 +563,11 @@
             }
         }
 
-        /* Secret message */
-        .secret-message {
-            position: relative;
-            z-index: 2;
-            background: rgba(255, 192, 203, 0.1);
-            border-radius: clamp(12px, 2vw, 20px);
-            padding: clamp(10px, 1.5vw, 15px);
-            margin-top: 15px;
-            display: none;
-            animation: fadeSlideIn 0.5s ease;
-            border: 1px dashed rgba(255, 255, 255, 0.3);
-            word-break: break-word;
-            overflow-wrap: break-word;
-            hyphens: auto;
-            max-width: 100%;
-            width: 100%;
-        }
-
-        .secret-message.show {
-            display: block;
-        }
-
-        @keyframes fadeSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         /* Confetti */
         .confetti-piece {
             position: fixed;
-            width: clamp(8px, 1.5vw, 12px);
-            height: clamp(8px, 1.5vw, 12px);
+            width: 10px;
+            height: 10px;
             z-index: 4;
             pointer-events: none;
             animation: confettiFall linear forwards;
@@ -590,109 +584,63 @@
             }
         }
 
-        /* Message Wall */
-        .message-wall {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: clamp(5px, 1vw, 10px);
-            margin-top: 20px;
-            width: 100%;
-        }
-
-        .message-bubble {
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: clamp(12px, 2vw, 20px);
-            padding: clamp(8px, 1vw, 10px) clamp(15px, 2vw, 20px);
-            font-size: clamp(0.7rem, 1.1vw, 0.85rem);
-            color: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            animation: popIn 0.5s ease;
-            cursor: pointer;
-            transition: all 0.3s;
-            word-break: break-word;
-            overflow-wrap: break-word;
-            max-width: 100%;
-        }
-
-        .message-bubble:hover {
-            background: rgba(255, 105, 180, 0.2);
-            transform: scale(1.05);
-        }
-
-        @keyframes popIn {
-            from {
-                transform: scale(0);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        /* تگ‌های داینامیک داخل result-box */
-        .result-inner {
-            width: 100%;
-            max-width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: clamp(8px, 1.2vw, 15px);
-            word-break: break-word;
-            overflow-wrap: break-word;
-        }
-
-        .result-date {
-            color: rgba(255,255,255,0.5);
-            font-size: clamp(0.7rem, 1.2vw, 0.85rem);
-            word-break: break-word;
-        }
-
-        .result-quote {
-            color: rgba(255,255,255,0.6);
-            font-size: clamp(0.75rem, 1.2vw, 0.9rem);
-            font-style: italic;
-            word-break: break-word;
-            max-width: 100%;
-        }
-
-        /* Media Queries اضافی برای اطمینان */
-        @media (max-width: 480px) {
+        /* Media Queries */
+        @media (max-height: 700px) {
             .container {
-                width: 98vw;
-                padding: 15px 12px;
-                gap: 12px;
+                gap: 4px;
             }
-            
-            .love-counter {
-                gap: 6px;
+            .love-icon {
+                font-size: 1.5rem;
             }
-            
-            .counter-item {
-                padding: 8px 10px;
-                min-width: 60px;
-            }
-            
-            .result-box {
-                padding: 15px 12px;
-                min-height: 80px;
-            }
-            
-            .love-text {
-                font-size: 1.3rem;
-            }
-            
             .title {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
+                margin: 5px 0;
+            }
+            .counter-item {
+                padding: 4px 8px;
+            }
+            .counter-number {
+                font-size: 1rem;
+            }
+            .envelope {
+                font-size: 1.5rem;
+            }
+            .result-box {
+                height: 80px;
+                min-height: 80px;
+                max-height: 80px;
+            }
+            .love-text {
+                font-size: 1.1rem;
             }
         }
 
-        @media (min-width: 1200px) {
-            .container {
-                max-width: 750px;
+        @media (max-height: 600px) {
+            .title {
+                font-size: 1rem;
+            }
+            .love-counter {
+                gap: 4px;
+            }
+            .counter-item {
+                padding: 3px 6px;
+            }
+            .counter-number {
+                font-size: 0.9rem;
+            }
+            .counter-label {
+                font-size: 0.55rem;
+            }
+            .result-box {
+                height: 65px;
+                min-height: 65px;
+                max-height: 65px;
+            }
+            .love-text {
+                font-size: 1rem;
+            }
+            .sender-text {
+                font-size: 0.7rem;
             }
         }
     </style>
@@ -710,9 +658,9 @@
 
     <!-- Main Content -->
     <div class="main-wrapper">
-        <div class="container">
+        <div class="container" id="mainContainer">
             <!-- Header -->
-            <div class="header">
+            <div class="header-section">
                 <div class="love-icon">💖</div>
                 <h1 class="title">
                     <span class="sparkle-text">✨ عشق من الینا ✨</span>
@@ -723,42 +671,40 @@
             <div class="love-counter">
                 <div class="counter-item">
                     <div class="counter-number" id="daysCounter">۰</div>
-                    <div class="counter-label">روز هم قدم داخل شهر قصه</div>
+                    <div class="counter-label">روز همقدم</div>
                 </div>
                 <div class="counter-item">
                     <div class="counter-number" id="langCounter">۰</div>
-                    <div class="counter-label">زبوووووون</div>
+                    <div class="counter-label">زبون</div>
                 </div>
                 <div class="counter-item">
                     <div class="counter-number" id="heartCounter">۰</div>
-                    <div class="counter-label">قلب شلیک شده =)</div>
+                    <div class="counter-label">قلب شلیک شده</div>
                 </div>
             </div>
 
             <!-- Love Letter -->
             <div class="love-letter" onclick="showSecretMessage()">
                 <span class="envelope">💌</span>
-                <div style="color: rgba(255,255,255,0.6); font-size: clamp(0.7rem, 1.1vw, 0.8rem); margin-top: 5px;">
+                <div style="color: rgba(255,255,255,0.6); font-size: 0.65rem;">
                    روی من کلیک کن
                 </div>
             </div>
 
-            <!-- Secret Message -->
-            <div class="secret-message" id="secretMessage">
-                <p style="color: #ff6b9d; font-size: clamp(0.9rem, 1.5vw, 1.1rem); line-height: 1.8;">
-                    الینام<br>
-                    تو برای من عزیز ترینی<br>
-                    تو بهترین اتفاق زندگی منی<br>
-                    خوردنی ترین
-                    خوش مزه ترین
-                    زیبا ترین
-                    با نمک ترین
-                    خوش بو ترین
-                    خوش خنده ترین
-                    تو همه ی ترین های قشنگ زندگی منی
-                    هر روزم با فکر تو شروع میشه و با عشق تو تموم میشه<br>
-                    دوست دارم بدون "تا"
-                </p>
+            <!-- Language Selector -->
+            <div class="select-wrapper">
+                <select class="language-select" id="languageSelect" onchange="showLove(this.value)">
+                    <option value="">🌠 یه زبون انتخاب کن ⭐</option>
+                </select>
+            </div>
+
+            <!-- Result Box - ارتفاع ثابت -->
+            <div class="result-box" id="resultBox">
+                <div class="result-inner">
+                    <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">
+                         منتظرم تا یه زبان انتخاب کنی...
+                    </p>
+                </div>
             </div>
 
             <!-- Music Button -->
@@ -766,18 +712,22 @@
                 🎵 آهنگ تو
             </button>
 
-            <!-- Language Selector -->
-            <div class="select-wrapper">
-                <select class="language-select" id="languageSelect" onchange="showLove(this.value)">
-                    <option value="">🌠 یه زبون رو انتخاب کن تا عشقمونو بشنوی ⭐</option>
-                </select>
-            </div>
-
-            <!-- Result Box - ساختار بهینه -->
-            <div class="result-box" id="resultBox">
-                <p style="color: rgba(255,255,255,0.5); font-size: clamp(0.9rem, 1.3vw, 1.1rem);">
-                     منتظرم تا یه زبان انتخاب کنی...
+            <!-- Secret Message (Overlay) -->
+            <div class="secret-message" id="secretMessage">
+                <p style="color: #ff6b9d; font-size: 0.9rem; line-height: 1.8; text-align: center;">
+                    الینام ❤️<br>
+                    تو برای من عزیز ترینی<br>
+                    تو بهترین اتفاق زندگی منی<br>
+                    خوردنی ترین، خوش مزه ترین<br>
+                    زیبا ترین، با نمک ترین<br>
+                    خوش بو ترین، خوش خنده ترین<br>
+                    تو همه ی ترین های قشنگ زندگی منی<br>
+                    دوست دارم بدون "تا" 💕
                 </p>
+                <button onclick="document.getElementById('secretMessage').classList.remove('show')" 
+                        style="margin-top: 10px; padding: 8px 20px; background: #ff6b9d; color: white; border: none; border-radius: 20px; cursor: pointer;">
+                    ✨
+                </button>
             </div>
         </div>
     </div>
@@ -789,7 +739,7 @@
 
     <script>
         // ============================================
-        // EXTENSIVE LANGUAGE DATABASE
+        // LANGUAGE DATABASE
         // ============================================
         const loveTranslations = {
             fa: "الینا دوستت دارم و عاشقتم 💕",
@@ -805,20 +755,6 @@
             th: "เอลิน่า, ฉันรักเธอ 💕",
             vi: "Elina, anh yêu em 💕",
             id: "Elina, aku cinta kamu 💕",
-            ms: "Elina, saya cintakan awak 💕",
-            tl: "Elina, mahal kita 💕",
-            km: "អេលីណា, ខ្ញុំស្រលាញ់អ្នក 💕",
-            lo: "ເອລີນ່າ, ຂ້ອຍຮັກເຈົ້າ 💕",
-            my: "အယ်လီနာ, မင်းကိုချစ်တယ် 💕",
-            ne: "एलिना, म तिमीलाई माया गर्छु 💕",
-            si: "එලිනා, මම ඔබට ආදරෙයි 💕",
-            ta: "எலினா, நான் உன்னை காதலிக்கிறேன் 💕",
-            te: "ఎలీనా, నేను నిన్ను ప్రేమిస్తున్నాను 💕",
-            ml: "എലീന, ഞാൻ നിന്നെ സ്നേഹിക്കുന്നു 💕",
-            kn: "ಎಲೀನಾ, ನಾನು ನಿನ್ನನ್ನು ಪ್ರೀತಿಸುತ್ತೇನೆ 💕",
-            mr: "एलिना, मी तुझ्यावर प्रेम करतो 💕",
-            gu: "એલિના, હું તને પ્રેમ કરું છું 💕",
-            pa: "ਏਲੀਨਾ, ਮੈਂ ਤੈਨੂੰ ਪਿਆਰ ਕਰਦਾ ਹਾਂ 💕",
             fr: "Elina, je t'aime 💕",
             es: "Elina, te amo 💕",
             de: "Elina, ich liebe dich 💕",
@@ -831,53 +767,26 @@
             fi: "Elina, rakastan sinua 💕",
             pl: "Elina, kocham cię 💕",
             cs: "Elina, miluji tě 💕",
-            sk: "Elina, milujem ťa 💕",
             hu: "Elina, szeretlek 💕",
             ro: "Elina, te iubesc 💕",
-            bg: "Елина, обичам те 💕",
-            sr: "Елина, волим те 💕",
-            hr: "Elina, volim te 💕",
-            sl: "Elina, ljubim te 💕",
-            lt: "Elina, aš tave myliu 💕",
-            lv: "Elina, es tevi mīlu 💕",
-            et: "Elina, ma armastan sind 💕",
-            uk: "Еліна, я тебе кохаю 💕",
             ru: "Элина, я тебя люблю 💕",
+            uk: "Еліна, я тебе кохаю 💕",
             el: "Ελίνα, σ' αγαπώ 💕",
-            sq: "Elina, të dua 💕",
-            mk: "Елина, те сакам 💕",
-            hy: "Էլինա, ես քեզ սիրում եմ 💕",
-            ka: "ელინა, მე შენ მიყვარხარ 💕",
-            is: "Elina, ég elska þig 💕",
-            mt: "Elina, inħobbok 💕",
-            cy: "Elina, rwy'n dy garu di 💕",
-            ga: "Elina, tá grá agam duit 💕",
-            eu: "Elina, maite zaitut 💕",
-            ca: "Elina, t'estimo 💕",
-            gl: "Elina, quérote 💕",
-            sw: "Elina, nakupenda 💕",
-            am: "ኤሊና, እወድሃለሁ 💕",
-            ha: "Elina, ina son ki 💕",
-            yo: "Elina, mo nifẹ rẹ 💕",
-            ig: "Elina, a hụrụ m gị n'anya 💕",
-            zu: "Elina, ngiyakuthanda 💕",
-            xh: "Elina, ndiyakuthanda 💕",
             he: "אלינה, אני אוהב אותך 💕",
-            ku: "Elina, ez te hezdikim 💕",
+            sw: "Elina, nakupenda 💕",
             eo: "Elina, mi amas vin 💕",
             la: "Elina, te amo 💕"
         };
 
-        // Love quotes
         const loveQuotes = [
-            "تو خورشیدی،نوری هستی که زندگیمو روشن کرده ",
-            "هر لحظه با تو بودن یه رنگ گرفتن رویامه",
-            "قلبم برات بوم بوم بوممممم💓",
+            "تو خورشیدی، نوری که زندگیمو روشن کرده ✨",
+            "هر لحظه با تو بودن یه رنگ گرفتن رویامه 🌈",
+            "قلبم برات بوم بوم بوممممم 💓",
             "تو بهترین هدیه‌ی خدا به منی 🎁",
-            "عشق تو مثل یه آهنگ قشنگه توی گوشم 🎶",
-            "الینا تویی که به تمام زیبایی‌ ها معنی میدی",
-            "با تو حتی سخت‌ترین روزها هم شیرینن",
-            "تو لبخندای هر روز منی"
+            "عشق تو مثل یه آهنگ قشنگه 🎶",
+            "الینا تویی که به زیبایی‌ها معنی میدی 🌸",
+            "با تو حتی سخت‌ترین روزها هم شیرینن 🍯",
+            "تو لبخندای هر روز منی 😊"
         ];
 
         // ============================================
@@ -911,98 +820,45 @@
         function populateLanguageSelect() {
             const select = document.getElementById('languageSelect');
             const languages = [
-                { code: 'fa', name: '🇮🇷 فارسی (Persian)', region: 'ایران' },
-                { code: 'en', name: '🇬🇧 English', region: 'Global' },
-                { code: 'ar', name: '🇸🇦 العربية (Arabic)', region: 'خاورمیانه' },
-                { code: 'tr', name: '🇹🇷 Türkçe (Turkish)', region: 'ترکیه' },
-                { code: 'fr', name: '🇫🇷 Français (French)', region: 'فرانسه' },
-                { code: 'es', name: '🇪🇸 Español (Spanish)', region: 'اسپانیا' },
-                { code: 'de', name: '🇩🇪 Deutsch (German)', region: 'آلمان' },
-                { code: 'it', name: '🇮🇹 Italiano (Italian)', region: 'ایتالیا' },
-                { code: 'pt', name: '🇧🇷 Português (Portuguese)', region: 'برزیل/پرتغال' },
-                { code: 'ru', name: '🇷🇺 Русский (Russian)', region: 'روسیه' },
-                { code: 'ja', name: '🇯🇵 日本語 (Japanese)', region: 'ژاپن' },
-                { code: 'ko', name: '🇰🇷 한국어 (Korean)', region: 'کره' },
-                { code: 'zh', name: '🇨🇳 中文 (Chinese)', region: 'چین' },
-                { code: 'hi', name: '🇮🇳 हिन्दी (Hindi)', region: 'هند' },
-                { code: 'nl', name: '🇳🇱 Nederlands (Dutch)', region: 'هلند' },
-                { code: 'sv', name: '🇸🇪 Svenska (Swedish)', region: 'سوئد' },
-                { code: 'no', name: '🇳🇴 Norsk (Norwegian)', region: 'نروژ' },
-                { code: 'da', name: '🇩🇰 Dansk (Danish)', region: 'دانمارک' },
-                { code: 'fi', name: '🇫🇮 Suomi (Finnish)', region: 'فنلاند' },
-                { code: 'pl', name: '🇵🇱 Polski (Polish)', region: 'لهستان' },
-                { code: 'uk', name: '🇺🇦 Українська (Ukrainian)', region: 'اوکراین' },
-                { code: 'el', name: '🇬🇷 Ελληνικά (Greek)', region: 'یونان' },
-                { code: 'he', name: '🇮🇱 עברית (Hebrew)', region: 'اسرائیل' },
-                { code: 'th', name: '🇹🇭 ไทย (Thai)', region: 'تایلند' },
-                { code: 'vi', name: '🇻🇳 Tiếng Việt (Vietnamese)', region: 'ویتنام' },
-                { code: 'id', name: '🇮🇩 Bahasa Indonesia', region: 'اندونزی' },
-                { code: 'sw', name: '🇹🇿 Kiswahili', region: 'آفریقا' },
-                { code: 'ro', name: '🇷🇴 Română (Romanian)', region: 'رومانی' },
-                { code: 'hu', name: '🇭🇺 Magyar (Hungarian)', region: 'مجارستان' },
-                { code: 'cs', name: '🇨🇿 Čeština (Czech)', region: 'چک' },
-                { code: 'bg', name: '🇧🇬 Български (Bulgarian)', region: 'بلغارستان' },
-                { code: 'sr', name: '🇷🇸 Српски (Serbian)', region: 'صربستان' },
-                { code: 'lt', name: '🇱🇹 Lietuvių (Lithuanian)', region: 'لیتوانی' },
-                { code: 'lv', name: '🇱🇻 Latviešu (Latvian)', region: 'لتونی' },
-                { code: 'et', name: '🇪🇪 Eesti (Estonian)', region: 'استونی' },
-                { code: 'sk', name: '🇸🇰 Slovenčina (Slovak)', region: 'اسلواکی' },
-                { code: 'sl', name: '🇸🇮 Slovenščina (Slovenian)', region: 'اسلوونی' },
-                { code: 'hr', name: '🇭🇷 Hrvatski (Croatian)', region: 'کرواسی' },
-                { code: 'sq', name: '🇦🇱 Shqip (Albanian)', region: 'آلبانی' },
-                { code: 'mk', name: '🇲🇰 Македонски (Macedonian)', region: 'مقدونیه' },
-                { code: 'hy', name: '🇦🇲 Հայերեն (Armenian)', region: 'ارمنستان' },
-                { code: 'ka', name: '🇬🇪 ქართული (Georgian)', region: 'گرجستان' },
-                { code: 'is', name: '🇮🇸 Íslenska (Icelandic)', region: 'ایسلند' },
-                { code: 'mt', name: '🇲🇹 Malti (Maltese)', region: 'مالت' },
-                { code: 'ga', name: '🇮🇪 Gaeilge (Irish)', region: 'ایرلند' },
-                { code: 'cy', name: '🏴󠁧󠁢󠁷󠁬󠁳󠁿 Cymraeg (Welsh)', region: 'ولز' },
-                { code: 'eu', name: '🇪🇸 Euskara (Basque)', region: 'باسک' },
-                { code: 'ca', name: '🇪🇸 Català (Catalan)', region: 'کاتالونیا' },
-                { code: 'bn', name: '🇧🇩 বাংলা (Bengali)', region: 'بنگلادش' },
-                { code: 'ur', name: '🇵🇰 اردو (Urdu)', region: 'پاکستان' },
-                { code: 'ta', name: '🇮🇳 தமிழ் (Tamil)', region: 'هند' },
-                { code: 'te', name: '🇮🇳 తెలుగు (Telugu)', region: 'هند' },
-                { code: 'ml', name: '🇮🇳 മലയാളം (Malayalam)', region: 'هند' },
-                { code: 'kn', name: '🇮🇳 ಕನ್ನಡ (Kannada)', region: 'هند' },
-                { code: 'mr', name: '🇮🇳 मराठी (Marathi)', region: 'هند' },
-                { code: 'gu', name: '🇮🇳 ગુજરાતી (Gujarati)', region: 'هند' },
-                { code: 'pa', name: '🇮🇳 ਪੰਜਾਬੀ (Punjabi)', region: 'هند' },
-                { code: 'eo', name: '🌍 Esperanto', region: 'جهانی' },
-                { code: 'la', name: '🏛️ Latina (Latin)', region: 'باستان' }
+                { code: 'fa', name: '🇮🇷 فارسی (Persian)' },
+                { code: 'en', name: '🇬🇧 English' },
+                { code: 'ar', name: '🇸🇦 العربية' },
+                { code: 'tr', name: '🇹🇷 Türkçe' },
+                { code: 'fr', name: '🇫🇷 Français' },
+                { code: 'es', name: '🇪🇸 Español' },
+                { code: 'de', name: '🇩🇪 Deutsch' },
+                { code: 'it', name: '🇮🇹 Italiano' },
+                { code: 'pt', name: '🇧🇷 Português' },
+                { code: 'ru', name: '🇷🇺 Русский' },
+                { code: 'ja', name: '🇯🇵 日本語' },
+                { code: 'ko', name: '🇰🇷 한국어' },
+                { code: 'zh', name: '🇨🇳 中文' },
+                { code: 'hi', name: '🇮🇳 हिन्दी' },
+                { code: 'nl', name: '🇳🇱 Nederlands' },
+                { code: 'sv', name: '🇸🇪 Svenska' },
+                { code: 'no', name: '🇳🇴 Norsk' },
+                { code: 'fi', name: '🇫🇮 Suomi' },
+                { code: 'pl', name: '🇵🇱 Polski' },
+                { code: 'uk', name: '🇺🇦 Українська' },
+                { code: 'el', name: '🇬🇷 Ελληνικά' },
+                { code: 'he', name: '🇮🇱 עברית' },
+                { code: 'th', name: '🇹🇭 ไทย' },
+                { code: 'vi', name: '🇻🇳 Tiếng Việt' },
+                { code: 'id', name: '🇮🇩 Bahasa' },
+                { code: 'sw', name: '🇹🇿 Kiswahili' },
+                { code: 'ro', name: '🇷🇴 Română' },
+                { code: 'hu', name: '🇭🇺 Magyar' },
+                { code: 'cs', name: '🇨🇿 Čeština' },
+                { code: 'eo', name: '🌍 Esperanto' },
+                { code: 'la', name: '🏛️ Latina' }
             ];
 
             languages.forEach(lang => {
                 const option = document.createElement('option');
                 option.value = lang.code;
-                option.textContent = `${lang.name} - ${lang.region}`;
+                option.textContent = lang.name;
                 select.appendChild(option);
             });
-        }
-
-        // ============================================
-        // RESIZE HANDLER - داینامیک تنظیم کردن سایز فونت
-        // ============================================
-        function adjustResultBoxFontSize() {
-            const loveText = document.querySelector('.love-text');
-            if (!loveText) return;
-            
-            const resultBox = document.getElementById('resultBox');
-            const maxWidth = resultBox.clientWidth - 40; // padding
-            
-            // تنظیم سایز فونت بر اساس طول متن
-            const textLength = loveText.textContent.length;
-            let fontSize;
-            
-            if (textLength > 50) {
-                fontSize = 'clamp(1rem, 2.5vw, 1.5rem)';
-            } else if (textLength > 30) {
-                fontSize = 'clamp(1.2rem, 3vw, 2rem)';
-            } else {
-                fontSize = 'clamp(1.5rem, 4vw, 2.5rem)';
-            }
-            
-            loveText.style.fontSize = fontSize;
         }
 
         // ============================================
@@ -1014,46 +870,42 @@
             const translation = loveTranslations[lang] || loveTranslations['en'];
             const resultBox = document.getElementById('resultBox');
             
-            resultBox.innerHTML = `
-                <div class="result-inner" style="animation: fadeSlideIn 0.5s ease; width: 100%;">
-                    <div class="love-text">${translation}</div>
-                    <div class="sender-text">
-                        از طرف <strong>لیموووووو شیرینتت، علیرضا</strong> <span class="heart">❤️</span>
-                    </div>
-                    <div class="result-date">
-                        🥰 ${new Date().toLocaleDateString('fa-IR', { 
-                            year: 'numeric', 
-                            month: 'long', 
-                            day: 'numeric',
-                            weekday: 'long'
-                        })}
-                    </div>
-                    <div class="result-quote">
-                        ${getRandomQuote()}
-                    </div>
-                </div>
-            `;
+            const shortTranslation = translation.length > 40 ? 
+                translation.substring(0, 37) + '...' : translation;
             
-            // تنظیم داینامیک سایز فونت
-            setTimeout(adjustResultBoxFontSize, 50);
+            // Fade out نرم
+            resultBox.style.opacity = '0';
+            resultBox.style.transform = 'scale(0.95)';
+            resultBox.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
             
-            // Trigger effects
+            // بعد از fade out، محتوا عوض بشه
+            setTimeout(() => {
+                resultBox.innerHTML = `
+                    <div class="result-inner">
+                        <div class="love-text">${shortTranslation}</div>
+                        <div class="sender-text">
+                            از طرف <strong>لیمو شیرینت، علیرضا</strong> <span class="heart">❤️</span>
+                        </div>
+                    </div>
+                `;
+                
+                // Fade in نرم
+                requestAnimationFrame(() => {
+                    resultBox.style.opacity = '1';
+                    resultBox.style.transform = 'scale(1)';
+                });
+            }, 200);
+            
             createBurstHearts();
             createConfetti();
             updateLangCounter();
             
-            // Scroll to result
-            resultBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
-            // Add vibration effect on mobile
             if (navigator.vibrate) {
                 navigator.vibrate([50, 50, 50, 50, 100]);
             }
         }
-
         function getRandomQuote() {
-            const quote = loveQuotes[Math.floor(Math.random() * loveQuotes.length)];
-            return quote;
+            return loveQuotes[Math.floor(Math.random() * loveQuotes.length)];
         }
 
         // ============================================
@@ -1061,18 +913,17 @@
         // ============================================
         function createBurstHearts() {
             const container = document.getElementById('heartsContainer');
-            const hearts = ['💕', '💖', '💗', '💓', '💝', '❤️', '💘', '💞', '😍', '🥰', '💌', '💟', '❣️', '💑', '💏'];
+            const hearts = ['💕', '💖', '💗', '💓', '💝', '❤️', '💘', '💞', '😍', '🥰'];
             
-            for (let i = 0; i < 25; i++) {
+            for (let i = 0; i < 20; i++) {
                 setTimeout(() => {
                     const heart = document.createElement('span');
                     heart.classList.add('float-heart');
                     heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
                     heart.style.left = (30 + Math.random() * 40) + '%';
-                    heart.style.top = '60%';
-                    heart.style.fontSize = (1.5 + Math.random() * 3) + 'rem';
+                    heart.style.top = '50%';
+                    heart.style.fontSize = (1.2 + Math.random() * 2) + 'rem';
                     heart.style.animationDuration = (2 + Math.random() * 3) + 's';
-                    heart.style.animationDelay = '0s';
                     
                     container.appendChild(heart);
                     
@@ -1085,18 +936,17 @@
         function createConfetti() {
             const colors = ['#ff6b9d', '#ffd700', '#ff3366', '#c44dff', '#ff9a9e', '#a18cd1', '#ff69b4', '#00d2ff'];
             
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 40; i++) {
                 setTimeout(() => {
                     const confetti = document.createElement('div');
                     confetti.classList.add('confetti-piece');
                     confetti.style.left = Math.random() * 100 + '%';
-                    confetti.style.top = '-50px';
+                    confetti.style.top = '-20px';
                     confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
                     confetti.style.animationDuration = (2 + Math.random() * 3) + 's';
-                    confetti.style.width = (8 + Math.random() * 10) + 'px';
-                    confetti.style.height = (8 + Math.random() * 10) + 'px';
+                    confetti.style.width = (6 + Math.random() * 8) + 'px';
+                    confetti.style.height = (6 + Math.random() * 8) + 'px';
                     confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '3px';
-                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
                     
                     document.body.appendChild(confetti);
                     
@@ -1107,28 +957,28 @@
 
         function startHeartRain() {
             const container = document.getElementById('heartRain');
-            const hearts = ['💕', '💖', '💗', '💓', '💝', '❤️', '💘', '💞', '✨', '🌟'];
+            const hearts = ['💕', '💖', '💗', '💓', '💝', '❤️', '✨', '🌟'];
             
             setInterval(() => {
                 const heart = document.createElement('span');
                 heart.classList.add('rain-heart');
                 heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
                 heart.style.left = Math.random() * 100 + '%';
-                heart.style.top = '-50px';
-                heart.style.fontSize = (1 + Math.random() * 2) + 'rem';
-                heart.style.animationDuration = (4 + Math.random() * 6) + 's';
+                heart.style.top = '-30px';
+                heart.style.fontSize = (0.8 + Math.random() * 1.5) + 'rem';
+                heart.style.animationDuration = (5 + Math.random() * 5) + 's';
                 heart.style.opacity = (0.2 + Math.random() * 0.3);
                 
                 container.appendChild(heart);
                 
                 setTimeout(() => heart.remove(), 8000);
-            }, 500);
+            }, 600);
         }
 
         function createStars() {
             const starsContainer = document.getElementById('stars');
             
-            for (let i = 0; i < 200; i++) {
+            for (let i = 0; i < 150; i++) {
                 const star = document.createElement('div');
                 star.classList.add('star');
                 star.style.width = (1 + Math.random() * 3) + 'px';
@@ -1186,14 +1036,14 @@
 
         // Click anywhere for hearts
         document.addEventListener('click', function(e) {
-            if (e.target.closest('select') || e.target.closest('button') || e.target.closest('.message-bubble')) return;
+            if (e.target.closest('select') || e.target.closest('button') || e.target.closest('.secret-message')) return;
             
             const heart = document.createElement('span');
             heart.classList.add('float-heart');
             heart.textContent = '💕';
             heart.style.left = e.clientX + 'px';
             heart.style.top = e.clientY + 'px';
-            heart.style.fontSize = (1.5 + Math.random() * 2) + 'rem';
+            heart.style.fontSize = (1.2 + Math.random() * 1.5) + 'rem';
             heart.style.position = 'fixed';
             heart.style.pointerEvents = 'none';
             heart.style.zIndex = '9999';
@@ -1215,29 +1065,11 @@
             updateDaysCounter();
             
             setInterval(updateDaysCounter, 60000);
-            
-            setTimeout(() => {
-                const resultBox = document.getElementById('resultBox');
-                resultBox.innerHTML = `
-                    <div class="result-inner" style="animation: fadeSlideIn 0.5s ease; width: 100%;">
-                        <div class="result-quote">
-                            ${getRandomQuote()}
-                        </div>
-                    </div>
-                `;
-            }, 1000);
 
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
                     e.preventDefault();
                     document.getElementById('languageSelect').focus();
-                }
-            });
-
-            // رصد تغییر سایز صفحه برای تنظیم مجدد
-            window.addEventListener('resize', () => {
-                if (document.querySelector('.love-text')) {
-                    adjustResultBoxFontSize();
                 }
             });
 
