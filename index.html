@@ -24,15 +24,14 @@
             height: 100dvh;
             background: #0a0a0a;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden; /* مهم: جلوگیری از اسکرول */
-            position: fixed; /* مهم: ثابت نگه داشتن کل صفحه */
+            overflow: hidden;
+            position: fixed;
             width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* Animated Galaxy Background */
         .galaxy-bg {
             position: fixed;
             top: 0;
@@ -118,7 +117,6 @@
             100% { transform: rotate(360deg) scale(1.5); }
         }
 
-        /* Main Container */
         .main-wrapper {
             position: relative;
             z-index: 1;
@@ -145,7 +143,6 @@
             border: 2px solid rgba(255, 255, 255, 0.15);
             width: min(650px, 95vw);
             max-width: 650px;
-            /* مهم: ارتفاع ثابت بر اساس viewport */
             height: calc(100vh - 20px);
             height: calc(100dvh - 20px);
             max-height: 800px;
@@ -154,7 +151,7 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: space-between; /* توزیع یکنواخت فضا */
+            justify-content: space-between;
             gap: 8px;
         }
 
@@ -197,11 +194,10 @@
             50% { transform: translateY(-5px); }
         }
 
-        /* بخش‌های داخلی با ارتفاع ثابت */
         .header-section {
             position: relative;
             z-index: 2;
-            flex-shrink: 0; /* ارتفاع ثابت */
+            flex-shrink: 0;
         }
 
         .love-icon {
@@ -244,7 +240,6 @@
             50% { filter: brightness(1.5) drop-shadow(0 0 10px gold); }
         }
 
-        /* Love Counter - جمع و جور */
         .love-counter {
             display: flex;
             justify-content: center;
@@ -279,7 +274,6 @@
             margin-top: 2px;
         }
 
-        /* Love Letter */
         .love-letter {
             position: relative;
             z-index: 2;
@@ -304,7 +298,6 @@
             50% { transform: translateY(-5px) rotate(3deg); }
         }
 
-        /* Language Select */
         .select-wrapper {
             position: relative;
             z-index: 2;
@@ -345,7 +338,6 @@
             padding: 10px;
         }
 
-        /* Result Box - با ارتفاع ثابت */
         .result-box {
             position: relative;
             z-index: 2;
@@ -360,10 +352,10 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease; /* فقط transition نگه دار */
+            transition: opacity 0.3s ease, transform 0.3s ease;
             overflow: hidden;
             flex-shrink: 0;
-            opacity: 1; /* opacity پیش‌فرض */
+            opacity: 1;
         }
 
         .result-inner {
@@ -372,19 +364,19 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 4px;
         }
 
         .love-text {
             color: white;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: bold;
             text-shadow: 
                 0 0 20px rgba(255, 105, 180, 0.8),
                 0 0 40px rgba(255, 105, 180, 0.4),
                 0 0 60px rgba(138, 43, 226, 0.3);
             animation: loveGlow 2s ease-in-out infinite;
-            white-space: nowrap; /* جلوگیری از شکستن خط */
+            white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 100%;
@@ -403,7 +395,7 @@
 
         .sender-text {
             color: rgba(255, 255, 255, 0.9);
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-style: italic;
         }
 
@@ -421,24 +413,18 @@
             60% { transform: scale(1); }
         }
 
-        .result-date {
-            color: rgba(255,255,255,0.5);
-            font-size: 0.65rem;
-        }
-
         .result-quote {
             color: rgba(255, 255, 255, 0.7);
             font-size: 0.7rem;
             font-style: italic;
-            margin-top: 5px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 100%;
             text-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
+            transition: opacity 0.5s ease;
         }
 
-        /* Music Player */
         .music-btn {
             position: relative;
             z-index: 2;
@@ -470,7 +456,6 @@
             50% { box-shadow: 0 0 50px rgba(255, 105, 180, 0.8); }
         }
 
-        /* Secret message */
         .secret-message {
             position: absolute;
             z-index: 10;
@@ -503,7 +488,6 @@
             }
         }
 
-        /* Floating Hearts */
         .hearts-container {
             position: fixed;
             top: 0;
@@ -536,7 +520,6 @@
             }
         }
 
-        /* Heart Rain */
         .heart-rain {
             position: fixed;
             top: 0;
@@ -565,7 +548,6 @@
             }
         }
 
-        /* Confetti */
         .confetti-piece {
             position: fixed;
             width: 10px;
@@ -586,7 +568,6 @@
             }
         }
 
-        /* Media Queries */
         @media (max-height: 700px) {
             .container {
                 gap: 4px;
@@ -608,12 +589,12 @@
                 font-size: 1.5rem;
             }
             .result-box {
-                height: 80px;
-                min-height: 80px;
-                max-height: 80px;
+                height: 90px;
+                min-height: 90px;
+                max-height: 90px;
             }
             .love-text {
-                font-size: 1.1rem;
+                font-size: 1rem;
             }
         }
 
@@ -634,34 +615,30 @@
                 font-size: 0.55rem;
             }
             .result-box {
-                height: 65px;
-                min-height: 65px;
-                max-height: 65px;
+                height: 75px;
+                min-height: 75px;
+                max-height: 75px;
             }
             .love-text {
-                font-size: 1rem;
+                font-size: 0.9rem;
             }
             .sender-text {
-                font-size: 0.7rem;
+                font-size: 0.65rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Galaxy Background -->
     <div class="galaxy-bg">
         <div class="stars" id="stars"></div>
         <div class="aurora"></div>
     </div>
 
-    <!-- Hearts Container -->
     <div class="hearts-container" id="heartsContainer"></div>
     <div class="heart-rain" id="heartRain"></div>
 
-    <!-- Main Content -->
     <div class="main-wrapper">
         <div class="container" id="mainContainer">
-            <!-- Header -->
             <div class="header-section">
                 <div class="love-icon">💖</div>
                 <h1 class="title">
@@ -669,7 +646,6 @@
                 </h1>
             </div>
 
-            <!-- Love Counter -->
             <div class="love-counter">
                 <div class="counter-item">
                     <div class="counter-number" id="daysCounter">۰</div>
@@ -685,7 +661,6 @@
                 </div>
             </div>
 
-            <!-- Love Letter -->
             <div class="love-letter" onclick="showSecretMessage()">
                 <span class="envelope">💌</span>
                 <div style="color: rgba(255,255,255,0.6); font-size: 0.65rem;">
@@ -693,14 +668,12 @@
                 </div>
             </div>
 
-            <!-- Language Selector -->
             <div class="select-wrapper">
                 <select class="language-select" id="languageSelect" onchange="showLove(this.value)">
                     <option value="">🌠 یه زبون انتخاب کن ⭐</option>
                 </select>
             </div>
 
-            <!-- Result Box - ارتفاع ثابت -->
             <div class="result-box" id="resultBox">
                 <div class="result-inner">
                     <p style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">
@@ -709,12 +682,10 @@
                 </div>
             </div>
 
-            <!-- Music Button -->
             <button class="music-btn" id="musicBtn" onclick="toggleMusic()">
                 🎵 آهنگ تو
             </button>
 
-            <!-- Secret Message (Overlay) -->
             <div class="secret-message" id="secretMessage">
                 <p style="color: #ff6b9d; font-size: 0.9rem; line-height: 1.8; text-align: center;">
                     الینام ❤️<br>
@@ -728,20 +699,19 @@
                 </p>
                 <button onclick="document.getElementById('secretMessage').classList.remove('show')" 
                         style="margin-top: 10px; padding: 8px 20px; background: #ff6b9d; color: white; border: none; border-radius: 20px; cursor: pointer;">
-                    ✨
+                    بستن ✨
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Hidden Audio -->
     <audio id="loveMusic" loop>
         <source src="Khalegh - Moein (320).mp3" type="audio/mpeg">
     </audio>
 
     <script>
         // ============================================
-        // LANGUAGE DATABASE
+        // GLOBAL VARIABLES - حتماً اینجا تعریف بشن
         // ============================================
         const loveTranslations = {
             fa: "الینا دوستت دارم و عاشقتم 💕",
@@ -785,10 +755,12 @@
             "هر لحظه با تو بودن یه رنگ گرفتن رویامه 🌈",
             "قلبم برات بوم بوم بوممممم 💓",
             "تو بهترین هدیه‌ی خدا به منی 🎁",
-            "عشق تو مثل یه آهنگ قشنگه 🎶",
+            "عشق تو مثل یه آهنگ قشنگه توی گوشم 🎶",
             "الینا تویی که به زیبایی‌ها معنی میدی 🌸",
             "با تو حتی سخت‌ترین روزها هم شیرینن 🍯",
-            "تو لبخندای هر روز منی 😊"
+            "تو لبخندای هر روز منی 😊",
+            "دوست دارم بدون تا، تا ابد 💫",
+            "تو قشنگ‌ترین ترانه‌ی زندگی منی 🎵"
         ];
 
         // ============================================
@@ -864,7 +836,7 @@
         }
 
         // ============================================
-        // SHOW LOVE FUNCTION
+        // SHOW LOVE FUNCTION - نسخه نرم با quote
         // ============================================
         function showLove(lang) {
             if (!lang) return;
@@ -875,6 +847,7 @@
             const shortTranslation = translation.length > 40 ? 
                 translation.substring(0, 37) + '...' : translation;
             
+            // گرفتن یه quote رندوم
             const randomQuote = loveQuotes[Math.floor(Math.random() * loveQuotes.length)];
             
             // Fade out نرم
@@ -882,6 +855,7 @@
             resultBox.style.transform = 'scale(0.95)';
             resultBox.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
             
+            // بعد از fade out، محتوا عوض بشه
             setTimeout(() => {
                 resultBox.innerHTML = `
                     <div class="result-inner">
@@ -889,12 +863,13 @@
                         <div class="sender-text">
                             از طرف <strong>لیمو شیرینت، علیرضا</strong> <span class="heart">❤️</span>
                         </div>
-                        <div class="result-quote" style="opacity: 0; transition: opacity 0.5s ease 0.3s;">
+                        <div class="result-quote" style="opacity: 0;">
                             ${randomQuote}
                         </div>
                     </div>
                 `;
                 
+                // Fade in نرم
                 requestAnimationFrame(() => {
                     resultBox.style.opacity = '1';
                     resultBox.style.transform = 'scale(1)';
@@ -902,8 +877,10 @@
                     // Quote با تاخیر 300ms ظاهر بشه
                     setTimeout(() => {
                         const quoteEl = resultBox.querySelector('.result-quote');
-                        if (quoteEl) quoteEl.style.opacity = '1';
-                    }, 0);
+                        if (quoteEl) {
+                            quoteEl.style.opacity = '1';
+                        }
+                    }, 300);
                 });
             }, 200);
             
@@ -914,9 +891,6 @@
             if (navigator.vibrate) {
                 navigator.vibrate([50, 50, 50, 50, 100]);
             }
-        }
-        function getRandomQuote() {
-            return loveQuotes[Math.floor(Math.random() * loveQuotes.length)];
         }
 
         // ============================================
@@ -1086,9 +1060,17 @@
 
             console.log('%c💖 سایت عاشقونه با موفقیت بارگذاری شد! 💖', 'color: #ff6b9d; font-size: 20px;');
             console.log('%cساخته شده با عشق برای الینا ❤️', 'color: #c44dff; font-size: 16px;');
+            
+            // تست اینکه quotes کار میکنه
+            console.log('Quotes loaded:', loveQuotes.length, 'items');
         }
 
-        init();
+        // مطمئن شو همه چی اجرا بشه
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
     </script>
 </body>
 </html>
