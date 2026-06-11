@@ -427,13 +427,15 @@
         }
 
         .result-quote {
-            color: rgba(255,255,255,0.6);
+            color: rgba(255, 255, 255, 0.7);
             font-size: 0.7rem;
             font-style: italic;
+            margin-top: 5px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 100%;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
         }
 
         /* Music Player */
@@ -873,12 +875,13 @@
             const shortTranslation = translation.length > 40 ? 
                 translation.substring(0, 37) + '...' : translation;
             
+            const randomQuote = loveQuotes[Math.floor(Math.random() * loveQuotes.length)];
+            
             // Fade out نرم
             resultBox.style.opacity = '0';
             resultBox.style.transform = 'scale(0.95)';
             resultBox.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
             
-            // بعد از fade out، محتوا عوض بشه
             setTimeout(() => {
                 resultBox.innerHTML = `
                     <div class="result-inner">
@@ -886,13 +889,21 @@
                         <div class="sender-text">
                             از طرف <strong>لیمو شیرینت، علیرضا</strong> <span class="heart">❤️</span>
                         </div>
+                        <div class="result-quote" style="opacity: 0; transition: opacity 0.5s ease 0.3s;">
+                            ${randomQuote}
+                        </div>
                     </div>
                 `;
                 
-                // Fade in نرم
                 requestAnimationFrame(() => {
                     resultBox.style.opacity = '1';
                     resultBox.style.transform = 'scale(1)';
+                    
+                    // Quote با تاخیر 300ms ظاهر بشه
+                    setTimeout(() => {
+                        const quoteEl = resultBox.querySelector('.result-quote');
+                        if (quoteEl) quoteEl.style.opacity = '1';
+                    }, 300);
                 });
             }, 200);
             
